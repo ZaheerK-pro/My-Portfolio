@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="shortcut icon" href="assets/icon.ico" type="image/x-icon" />
-    <title>Zaheer Khan : Personal-Portfolio</title>
+    <title>Zaheer Khan: Personal-Portfolio</title>
 
     <link
       rel="stylesheet"
@@ -455,22 +455,25 @@
       </div>
 
       <div class="row">
-        <form action="">
-          <input type="text" placeholder="name" class="box" required />
-          <input type="email" placeholder="email" class="box" required />
-          <input type="number" placeholder="number" class="box" required />
 
-          <textarea
-            name=""
-            placeholder="message"
-            id=""
-            cols="30"
-            rows="10"
-            required
-          ></textarea>
+        <!-- <form action="http://localhost:5000/api/contact" method="POST">
+          <input type="text" placeholder="name" name="name" class="box" required />
+          <input type="email" placeholder="email" name="email" class="box" required />
+          <input type="number" placeholder="number" name="number" class="box" required />
+          <textarea name="message" placeholder="message" cols="30" rows="10" required></textarea>
+          <input type="submit" class="btn" value="send message" />
+        </form> -->
 
+        <form id="contactForm">
+          <input type="text" placeholder="name" name="name" class="box" required />
+          <input type="email" placeholder="email" name="email" class="box" required />
+          <input type="number" placeholder="number" name="number" class="box" required />
+          <textarea name="message" placeholder="message" cols="30" rows="10" required></textarea>
           <input type="submit" class="btn" value="send message" />
         </form>
+        <div id="toast" style="display: none;">Message sent successfully!</div>
+        
+        
 
         <iframe
           class="map"
