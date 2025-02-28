@@ -34,3 +34,41 @@ document.querySelectorAll('a').forEach(links => {
     }
 
 });
+
+
+document.getElementById('contactForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Prevent the default form submission
+  
+    const formData = new FormData(this);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Success:', result);
+        document.getElementById('toast').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('toast').style.display = 'none';
+        }, 3000);
+      } else {
+        const error = await response.text();
+        console.error('Failed to submit form. Status:', response.status, 'Error:', error);
+        alert('Failed to submit form. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    }
+  });
+  
