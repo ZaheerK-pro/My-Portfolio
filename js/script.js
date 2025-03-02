@@ -11,6 +11,7 @@ window.onscroll = () => {
     header.classList.remove('active');
 }
 
+// Cursor effect
 let cursor1 = document.querySelector('.cursor-1');
 let cursor2 = document.querySelector('.cursor-2');
 
@@ -37,38 +38,72 @@ document.querySelectorAll('a').forEach(links => {
 
 
 document.getElementById('contactForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent the default form submission
-  
+    event.preventDefault();
+
     const formData = new FormData(this);
-    const data = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
-  
+    const data = Object.fromEntries(formData.entries());
+
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-  
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Success:', result);
-        document.getElementById('toast').style.display = 'block';
-        setTimeout(() => {
-          document.getElementById('toast').style.display = 'none';
-        }, 3000);
-      } else {
-        const error = await response.text();
-        console.error('Failed to submit form. Status:', response.status, 'Error:', error);
-        alert('Failed to submit form. Please try again.');
-      }
+        const response = await fetch('http://localhost:5000/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            showToast("Message sent successfully!", "success");
+            this.reset();
+        } else {
+            const error = await response.text();
+            console.error('Failed to submit form. Status:', response.status, 'Error:', error);
+            showToast("Failed to send message. Please try again.", "error");
+        }
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+        console.error('Error:', error);
+        showToast("An error occurred. Please try again.", "error");
     }
-  });
-  
+});
+
+function showToast(message, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = type === "success" ? "toast success" : "toast error"; // Dynamic class
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 3000);
+}
+
+
+function animateCounter(elementId, finalValue, speed = 500) {
+    let count = 0;
+    const element = document.getElementById(elementId);
+
+    const interval = setInterval(() => {
+        if (count < finalValue) {
+            count++;
+            element.textContent = count;
+        } else {
+            clearInterval(interval);
+        }
+    }, speed);
+}
+
+// Age Counter
+const birthYear = 2001;
+const currentYear = new Date().getFullYear();
+const age = currentYear - birthYear;
+animateCounter("age", age, 100);
+
+// Experience Counter
+const startExperienceYear = 2024;
+const experienceYears = currentYear - startExperienceYear;
+animateCounter("experience", experienceYears, 200);
+
+// Dynamic Footer Years
+document.getElementById("startYear").textContent = currentYear;
+document.getElementById("currentYear").textContent = currentYear + 1;
