@@ -9,4 +9,19 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
+const createTableQuery = `
+  CREATE TABLE IF NOT EXISTS contacts (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    number VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+`;
+
+pool.query(createTableQuery)
+  .then(() => console.log("✅ Contacts table is ready"))
+  .catch((err) => console.error("❌ Table creation error:", err));
+
 module.exports = pool;
