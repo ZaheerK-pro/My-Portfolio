@@ -607,6 +607,37 @@ header .follow a:hover {
     color: var(--main-color);
 }
 
+/* Toast Notification Styling */
+#toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    display: none;
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+#toast.success {
+    background: var(--main-color);
+    color: white;
+}
+
+#toast.error {
+    background: #f44336;
+    color: white;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(30px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(30px); }
+}
+
 
 /* media queries  */
 @media (max-width:991px) {
