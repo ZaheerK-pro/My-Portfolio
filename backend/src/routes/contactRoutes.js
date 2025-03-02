@@ -1,8 +1,9 @@
 const express = require('express');
-const { handleContactForm } = require('../controllers/contactController');
+const { handleContactForm, getContacts } = require('../controllers/contactController');
+
 const router = express.Router();
 
-// Define the route for POST requests to /api/contact
 router.post('/contact', handleContactForm);
+router.get('/contacts', getContacts);
 
 module.exports = router;
